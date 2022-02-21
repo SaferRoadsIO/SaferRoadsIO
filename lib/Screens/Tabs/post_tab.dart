@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:saferroadsio/Classes/post_class.dart';
 import 'package:video_player/video_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../Classes/colors_class.dart';
 import '../../Classes/locator_class.dart';
 import '../../Database/db_manager.dart';
 import '../media_player.dart';
@@ -480,10 +481,19 @@ class _PostTabState extends State<PostTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF4b4266),
+      backgroundColor: backgroundColor,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: secondaryColor,
+        onPressed: () {
+          promptInput(context);
+        },
+        child: const Icon(
+          Icons.camera_alt,
+        ),
+      ),
       body: Theme(
         data: Theme.of(context).copyWith(
-          canvasColor: const Color(0xFF282a36),
+          canvasColor: backgroundColor,
         ),
         child: SingleChildScrollView(
           child: Center(
@@ -491,17 +501,23 @@ class _PostTabState extends State<PostTab> {
               padding: const EdgeInsets.only(top: 70),
               child: Column(
                 children: [
+                  const Text('Report A Crime',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Karla-Medium',
+                      )),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.only(bottom: 15, top: 20),
                     child: DropdownButton<String>(
                       value: violation,
                       icon: const Icon(Icons.arrow_downward),
                       iconSize: 24,
                       elevation: 16,
-                      style: const TextStyle(color: Colors.deepPurple),
+                      style: const TextStyle(color: Colors.black),
                       underline: Container(
                         height: 2,
-                        color: const Color(0xFF50fa7b),
+                        color: Colors.black,
                       ),
                       items: violations
                           .map<DropdownMenuItem<String>>((String value) {
@@ -510,7 +526,7 @@ class _PostTabState extends State<PostTab> {
                           child: Text(
                             value,
                             style: const TextStyle(
-                              color: Color(0xFF8be9fd),
+                              color: Colors.black,
                             ),
                           ),
                         );
@@ -531,29 +547,31 @@ class _PostTabState extends State<PostTab> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        promptInput(context);
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color?>(
-                            const Color(0xFF8be9fd)),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                      ),
-                      child: const Text('Add Image/Video'),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 15),
+                  //   child: ElevatedButton(
+                  //     onPressed: () {
+                  //       promptInput(context);
+                  //     },
+                  //     style: ButtonStyle(
+                  //       backgroundColor:
+                  //           MaterialStateProperty.all<Color?>(secondaryColor),
+                  //       shape: MaterialStateProperty.all(
+                  //         RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(15),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     child: const Text('Add Image/Video'),
+                  //   ),
+                  // ),
                   Visibility(
                     visible: loadingBarVisible,
-                    child: const Padding(
-                      padding: EdgeInsets.only(bottom: 15),
-                      child: SizedBox(width: 50, child: Text('Loading')),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                          width: 50,
+                          child: Image.asset('assets/images/loading.gif')),
                     ),
                   ),
                   Column(
@@ -568,20 +586,25 @@ class _PostTabState extends State<PostTab> {
                         children: [
                           const Text(
                             "Number Plate: ",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Karla-Medium',
+                              fontSize: 17,
+                            ),
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: const Color(0xFF282a36),
+                              borderRadius: BorderRadius.circular(12),
+                              color: secondaryColor,
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(8),
+                              padding: const EdgeInsets.fromLTRB(13, 8, 13, 8),
                               child: Text(
                                 numberPlate,
                                 style: const TextStyle(
-                                  color: Color(0xFF50fa7b),
-                                ),
+                                    color: Colors.black,
+                                    fontFamily: 'Karla-Medium',
+                                    fontSize: 15),
                               ),
                             ),
                           ),
@@ -592,13 +615,14 @@ class _PostTabState extends State<PostTab> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: SizedBox(
-                      width: 325,
+                      width: 260,
+                      height: 42,
                       child: TextField(
                         // maxLines: null,
                         textAlign: TextAlign.left,
                         textAlignVertical: TextAlignVertical.center,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontFamily: 'Karla-Medium',
                         ),
                         onChanged: (String text) {
@@ -623,36 +647,27 @@ class _PostTabState extends State<PostTab> {
                             });
                           }
                         },
-                        cursorColor: const Color(0xFF50fa7b),
                         decoration: InputDecoration(
                           contentPadding:
                               const EdgeInsets.fromLTRB(15, 0, 0, 0),
                           hintText: 'Description..',
-                          hintStyle: const TextStyle(
+                          hintStyle: TextStyle(
                             fontFamily: 'Karla-Medium',
-                            color: Colors.grey,
+                            color: Colors.grey.shade700,
                           ),
-                          fillColor: const Color(0xFF4b4266),
                           focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Color(0xFF50fa7b),
-                              width: 3.5,
+                              color: Colors.black,
+                              width: 2.5,
                             ),
-                            borderRadius: BorderRadius.circular(15.0),
+                            borderRadius: BorderRadius.circular(12),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: Color(0xFF50fa7b),
-                              width: 3.5,
+                              color: Colors.black,
+                              width: 2.5,
                             ),
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xFF50fa7b),
-                              width: 3.5,
-                            ),
-                            borderRadius: BorderRadius.circular(15.0),
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
                       ),
@@ -678,64 +693,81 @@ class _PostTabState extends State<PostTab> {
                     child: Text(
                       "Chance of Approval: ${chanceOfApproval.round()}%",
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 16,
+                        fontFamily: 'Karla-Medium',
                       ),
                     ),
                   ),
                   Visibility(
                     visible: loadingButtonVisible,
-                    child: const Padding(
-                      padding: EdgeInsets.only(bottom: 15),
-                      child: SizedBox(width: 50, child: Text('Loading')),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: SizedBox(
+                          width: 50,
+                          child: Image.asset('assets/images/loading.gif')),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      setState(() {
-                        loadingButtonVisible = true;
-                      });
-                      DatabaseManager manager = DatabaseManager();
-                      Locator locator = Locator();
-                      Position? currentPos = await locator.getCurrentPosition();
-                      Timestamp now = Timestamp.now();
-                      Post post = Post(
-                        violation: violation,
-                        description: description,
-                        status: 'Unknown',
-                        mediaUrls: [],
-                        mediaDetails: mediaDetails,
-                        numberPlate: numberPlate,
-                        latitude: (currentPos?.latitude)!,
-                        longitude: (currentPos?.longitude)!,
-                        uploadTime: now,
-                      );
-                      print("Submit to police");
-                      await manager.uploadPost(post);
-                      await manager.uploadFiles(files, now);
-                      await manager.uploadNumberPlate(numberPlate);
-                      await manager.uploadPostToPolice(post, now);
-                      setState(() {
-                        loadingButtonVisible = false;
-                      });
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Success()));
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color?>(
-                          const Color(0xFF8be9fd)),
-                      shape: MaterialStateProperty.all(
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(15),
-                            topLeft: Radius.circular(15),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5, bottom: 50),
+                    child: SizedBox(
+                      width: 260,
+                      height: 42,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          setState(() {
+                            loadingButtonVisible = true;
+                          });
+                          DatabaseManager manager = DatabaseManager();
+                          Locator locator = Locator();
+                          Position? currentPos =
+                              await locator.getCurrentPosition();
+                          Timestamp now = Timestamp.now();
+                          Post post = Post(
+                            violation: violation,
+                            description: description,
+                            status: 'Unknown',
+                            mediaUrls: [],
+                            mediaDetails: mediaDetails,
+                            numberPlate: numberPlate,
+                            latitude: (currentPos?.latitude)!,
+                            longitude: (currentPos?.longitude)!,
+                            uploadTime: now,
+                          );
+                          print("Submit to police");
+                          await manager.uploadPost(post);
+                          await manager.uploadFiles(files, now);
+                          await manager.uploadNumberPlate(numberPlate);
+                          await manager.uploadPostToPolice(post, now);
+                          setState(() {
+                            loadingButtonVisible = false;
+                          });
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Success()));
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color?>(secondaryColor),
+                          shape: MaterialStateProperty.all(
+                            const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+                        child: const Text(
+                          'Submit to Police',
+                          style: TextStyle(
+                            fontFamily: 'Karla-Medium',
+                            color: Colors.black,
+                            fontSize: 16,
                           ),
                         ),
                       ),
                     ),
-                    child: const Text('Submit to Police'),
                   ),
                 ],
               ),

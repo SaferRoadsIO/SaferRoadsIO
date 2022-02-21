@@ -108,9 +108,10 @@ class _EditProfileState extends State<EditProfile> {
             ),
             Visibility(
               visible: loadingButtonVisible,
-              child: const Padding(
-                padding: EdgeInsets.only(bottom: 15),
-                child: SizedBox(width: 50, child: Text('Loading')),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: SizedBox(
+                    width: 50, child: Image.asset('assets/images/loading.gif')),
               ),
             ),
             ElevatedButton(

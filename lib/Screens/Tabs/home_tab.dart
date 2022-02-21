@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:saferroadsio/Classes/colors_class.dart';
 import 'package:saferroadsio/Classes/post_class.dart';
 import 'package:saferroadsio/Database/auth_manager.dart';
 import '../../Components/post_card.dart';
@@ -36,7 +37,7 @@ class _HomeTabState extends State<HomeTab> {
   Widget build(BuildContext context) {
     if (currentUser != null) {
       return Scaffold(
-        backgroundColor: const Color(0xFF4b4266),
+        backgroundColor: backgroundColor,
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -51,9 +52,9 @@ class _HomeTabState extends State<HomeTab> {
                     );
                   },
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF44475a),
-                      border: Border(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade600,
+                      border: const Border(
                         top: BorderSide(
                           color: Colors.black,
                           width: 2.0,
@@ -87,7 +88,10 @@ class _HomeTabState extends State<HomeTab> {
                   padding: EdgeInsets.all(10),
                   child: Text(
                     "Recent Uploads",
-                    style: TextStyle(color: Colors.white, fontSize: 23),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 23,
+                    ),
                   ),
                 ),
                 Container(
@@ -111,7 +115,7 @@ class _HomeTabState extends State<HomeTab> {
                         return ListView(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          children: docs.map((
+                          children: docs.map<Widget>((
                             QueryDocumentSnapshot document,
                           ) {
                             dynamic data = document.data();
