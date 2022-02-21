@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:saferroadsio/Database/db_manager.dart';
@@ -22,6 +23,8 @@ class _ProfileTabState extends State<ProfileTab> {
   int declinedPosts = 0;
   final picker = ImagePicker();
 
+  String newUsername = '';
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +34,82 @@ class _ProfileTabState extends State<ProfileTab> {
       approvedPosts = await getApprovedPosts();
       declinedPosts = await getDeclinedPosts();
     });
+  }
+
+  Future changeUsername(String name) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    DatabaseManager manager = DatabaseManager();
+    await manager.changeUsername(auth.currentUser?.uid, name);
+  }
+
+  void editUsernameDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          side: BorderSide(
+            color: Colors.white,
+            width: 2,
+          ),
+        ),
+        child: SizedBox(
+          width: 100,
+          height: 250,
+          child: Column(
+            children: [
+              TextField(
+                onChanged: (newText) {
+                  setState(() {
+                    newUsername = newText;
+                  });
+                  print('Username is changed to => $newUsername');
+                },
+                textAlign: TextAlign.center,
+                textAlignVertical: TextAlignVertical.center,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Karla-Medium',
+                ),
+                obscureText: false,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.only(top: 10),
+                  hintText: 'New Username',
+                  hintStyle: TextStyle(
+                    fontFamily: 'Karla-Medium',
+                    color: Colors.grey.shade700,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.black,
+                      width: 3,
+                    ),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.black,
+                      width: 3,
+                    ),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (newUsername != '') {
+                    changeUsername(newUsername);
+                  }
+                  Navigator.pop(context);
+                },
+                child: const Text('Save'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Future<int> getDeclinedPosts() async {
@@ -53,26 +132,26 @@ class _ProfileTabState extends State<ProfileTab> {
     });
   }
 
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => EditProfile(
-        fullName: fullName,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        var begin = const Offset(0.0, 1.0);
-        var end = Offset.zero;
-        var curve = Curves.ease;
+  // Route _createRoute() {
+  //   return PageRouteBuilder(
+  //     pageBuilder: (context, animation, secondaryAnimation) => EditProfile(
+  //       fullName: fullName,
+  //     ),
+  //     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+  //       var begin = const Offset(0.0, 1.0);
+  //       var end = Offset.zero;
+  //       var curve = Curves.ease;
 
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+  //       var tween =
+  //           Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
-      },
-    );
-  }
+  //       return SlideTransition(
+  //         position: animation.drive(tween),
+  //         child: child,
+  //       );
+  //     },
+  //   );
+  // }
 
   String getDisplayName() {
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -108,38 +187,52 @@ class _ProfileTabState extends State<ProfileTab> {
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
-                  Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(_createRoute());
-                            },
-                            child: const Text(
-                              'edit',
-                              style: TextStyle(
-                                color: Color(0xFF8be9fd),
-                                fontSize: 21,
-                                fontFamily: 'Karla-Medium',
-                              ),
-                            ),
+                  // Stack(
+                  //   children: [
+                  //     Padding(
+                  //       padding: const EdgeInsets.all(8),
+                  //       child: Align(
+                  //         alignment: Alignment.topRight,
+                  //         child: GestureDetector(
+                  //           onTap: () {
+                  //             Navigator.of(context).push(_createRoute());
+                  //           },
+                  //           child: const Text(
+                  //             'edit',
+                  //             style: TextStyle(
+                  //               color: Color(0xFF8be9fd),
+                  //               fontSize: 21,
+                  //               fontFamily: 'Karla-Medium',
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5, top: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          fullName,
+                          style: const TextStyle(
+                            color: Color(0xFF50fa7b),
+                            fontSize: 23,
+                            fontFamily: 'Karla-Medium',
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Text(
-                      fullName,
-                      style: const TextStyle(
-                        color: Color(0xFF50fa7b),
-                        fontSize: 23,
-                        fontFamily: 'Karla-Medium',
-                      ),
+                        GestureDetector(
+                          onTap: () {
+                            editUsernameDialog(context);
+                          },
+                          child: const Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   Padding(
