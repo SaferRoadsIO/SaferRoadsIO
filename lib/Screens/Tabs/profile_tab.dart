@@ -3,15 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
-import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:saferroadsio/Classes/colors_class.dart';
 import 'package:saferroadsio/Database/db_manager.dart';
 import '../../Auth/login_screen.dart';
 import '../../Database/auth_manager.dart';
-import '../edit_profile.dart';
 
 class ProfileTab extends StatefulWidget {
+  const ProfileTab({Key? key}) : super(key: key);
+
   @override
   _ProfileTabState createState() => _ProfileTabState();
 }
@@ -46,7 +46,7 @@ class _ProfileTabState extends State<ProfileTab> {
     showDialog(
       context: context,
       builder: (context) => Dialog(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.grey.shade300,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
           side: BorderSide(
@@ -57,55 +57,87 @@ class _ProfileTabState extends State<ProfileTab> {
         child: SizedBox(
           width: 100,
           height: 250,
-          child: Column(
-            children: [
-              TextField(
-                onChanged: (newText) {
-                  setState(() {
-                    newUsername = newText;
-                  });
-                  print('Username is changed to => $newUsername');
-                },
-                textAlign: TextAlign.center,
-                textAlignVertical: TextAlignVertical.center,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Karla-Medium',
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Text("Edit Username",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontFamily: 'Karla-Medium',
+                          fontWeight: FontWeight.w700)),
                 ),
-                obscureText: false,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.only(top: 10),
-                  hintText: 'New Username',
-                  hintStyle: TextStyle(
-                    fontFamily: 'Karla-Medium',
-                    color: Colors.grey.shade700,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
+                SizedBox(
+                  width: 250,
+                  height: 42,
+                  child: TextField(
+                    onChanged: (newText) {
+                      setState(() {
+                        newUsername = newText;
+                      });
+                      print('Username is changed to => $newUsername');
+                    },
+                    textAlign: TextAlign.center,
+                    textAlignVertical: TextAlignVertical.center,
+                    style: const TextStyle(
                       color: Colors.black,
-                      width: 3,
+                      fontFamily: 'Karla-Medium',
                     ),
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.black,
-                      width: 3,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(top: 10),
+                      hintText: 'New Username',
+                      hintStyle: TextStyle(
+                        fontFamily: 'Karla-Medium',
+                        color: Colors.grey.shade700,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                          width: 3,
+                        ),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                          width: 3,
+                        ),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (newUsername != '') {
-                    changeUsername(newUsername);
-                  }
-                  Navigator.pop(context);
-                },
-                child: const Text('Save'),
-              ),
-            ],
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: 250,
+                  height: 42,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color?>(secondaryColor),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (newUsername != '') {
+                        changeUsername(newUsername);
+                      }
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Save'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -178,12 +210,12 @@ class _ProfileTabState extends State<ProfileTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF4b4266),
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: Column(
           children: [
             Container(
-              color: const Color(0xFF282a36),
+              color: Colors.grey.shade800,
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
@@ -215,21 +247,25 @@ class _ProfileTabState extends State<ProfileTab> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          fullName,
-                          style: const TextStyle(
-                            color: Color(0xFF50fa7b),
-                            fontSize: 23,
-                            fontFamily: 'Karla-Medium',
+                        Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: Text(
+                            fullName,
+                            style: TextStyle(
+                              color: secondaryColor,
+                              fontSize: 23,
+                              fontFamily: 'Karla-Medium',
+                            ),
                           ),
                         ),
                         GestureDetector(
                           onTap: () {
                             editUsernameDialog(context);
                           },
-                          child: const Icon(
+                          child: Icon(
                             Icons.edit,
-                            color: Colors.white,
+                            color: secondaryColor,
+                            size: 23,
                           ),
                         )
                       ],
@@ -240,7 +276,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     child: Text(
                       'Current Balance : $currentBalance',
                       style: const TextStyle(
-                        color: Color(0xFF50fa7b),
+                        color: Colors.white,
                         fontSize: 17,
                       ),
                     ),
@@ -250,7 +286,7 @@ class _ProfileTabState extends State<ProfileTab> {
             ),
             Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF44475a),
+                color: Colors.grey.shade700,
                 border: Border.all(
                   color: const Color(0xFF282a36),
                 ),
@@ -303,32 +339,44 @@ class _ProfileTabState extends State<ProfileTab> {
                 ],
               ),
             ),
-            TextButton.icon(
-              onPressed: () async {
-                AuthManager manager = AuthManager();
-                await manager.signOut().then(
-                  (_) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ),
+            Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: SizedBox(
+                width: 200,
+                height: 42,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    AuthManager manager = AuthManager();
+                    await manager.signOut().then(
+                      (_) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-              },
-              icon: const Icon(
-                Icons.exit_to_app,
-                color: Colors.amber,
-              ),
-              label: const Text(
-                'Logout',
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 20.0,
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color?>(Colors.red.shade400),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  child: const Text(
+                    'Logout',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                    ),
+                  ),
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),
