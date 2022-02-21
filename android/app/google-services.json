@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "392122110488",
+    "project_id": "saferroadsio",
+    "storage_bucket": "saferroadsio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:392122110488:android:524e9f6f95bbf9c4a4696d",
+        "android_client_info": {
+          "package_name": "com.example.saferroadsio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "392122110488-1ofvjdvctdt814r2er45o536nb0nq6pc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiqNmy6Y2CYQMRJdVG8XzeTGlPwPWCaqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "392122110488-1ofvjdvctdt814r2er45o536nb0nq6pc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
