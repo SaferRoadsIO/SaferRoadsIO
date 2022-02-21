@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saferroadsio/Classes/colors_class.dart';
 import '../Classes/app_user.dart';
 
 class UserCard extends StatelessWidget {
@@ -9,16 +10,14 @@ class UserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 30, right: 30),
+      padding: const EdgeInsets.only(left: 30, right: 30, bottom: 5),
       child: Container(
         height: 40,
         decoration: BoxDecoration(
-          color: const Color(0xFF151430),
+          color: Colors.grey.shade800,
           border: Border.all(
-            color: const Color(
-              0XFFff79c6,
-            ),
-            width: 3.0,
+            color: Colors.black,
+            width: 2.0,
           ),
           borderRadius: BorderRadius.circular(15),
         ),
@@ -31,8 +30,8 @@ class UserCard extends StatelessWidget {
                 children: [
                   Text(
                     '${user.currentBalance}',
-                    style: const TextStyle(
-                      color: Color(0xFF50fa7b),
+                    style: TextStyle(
+                      color: secondaryColor,
                       fontSize: 17,
                     ),
                   ),

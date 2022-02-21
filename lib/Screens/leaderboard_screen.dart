@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:saferroadsio/Classes/colors_class.dart';
 import '../Classes/app_user.dart';
 import '../Components/user_card.dart';
 
@@ -12,11 +12,11 @@ class Leaderboard extends StatelessWidget {
     // Image.asset('assets/images/trophy.gif'),
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF312c42),
+        backgroundColor: Colors.grey.shade800,
         title: const Text('Leaderboard'),
         centerTitle: true,
       ),
-      backgroundColor: const Color(0xFF4b4266),
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -24,7 +24,7 @@ class Leaderboard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 30),
               child: Image.asset(
-                'assets/images/trophy.gif',
+                'assets/images/trophy.png',
                 height: 150,
               ),
             ),
