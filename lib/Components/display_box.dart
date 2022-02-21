@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saferroadsio/Classes/colors_class.dart';
 
 class DisplayBox extends StatelessWidget {
   const DisplayBox({
@@ -16,15 +17,16 @@ class DisplayBox extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: const Color(0xFF070c29),
+            color: secondaryColor,
           ),
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Text(
               text,
               style: const TextStyle(
-                color: Color(0xFF50fa7b),
-              ),
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saferroadsio/Classes/colors_class.dart';
 import '../Classes/post_class.dart';
 import '../Components/display_box.dart';
 import 'dart:async';
@@ -52,7 +53,7 @@ class _PostDisplayState extends State<PostDisplay> {
                         // },
                       ),
                     )
-                  : const Text("Display video"),
+                  : const Text(''),
             ),
           );
           idx += 1;
@@ -64,9 +65,9 @@ class _PostDisplayState extends State<PostDisplay> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF4b4266),
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF312c42),
+        backgroundColor: Colors.grey.shade800,
         title: const Text('Post'),
       ),
       body: Center(
@@ -81,7 +82,10 @@ class _PostDisplayState extends State<PostDisplay> {
                   children: [
                     const Text(
                       'Violation : ',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700),
                       overflow: TextOverflow.ellipsis,
                     ),
                     DisplayBox(
@@ -103,7 +107,10 @@ class _PostDisplayState extends State<PostDisplay> {
                   children: [
                     const Text(
                       'Description : ',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700),
                       overflow: TextOverflow.ellipsis,
                     ),
                     DisplayBox(
@@ -119,7 +126,10 @@ class _PostDisplayState extends State<PostDisplay> {
                   children: [
                     const Text(
                       'Number Plate : ',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700),
                       overflow: TextOverflow.ellipsis,
                     ),
                     DisplayBox(
@@ -135,7 +145,10 @@ class _PostDisplayState extends State<PostDisplay> {
                   children: [
                     const Text(
                       'Location : ',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700),
                       overflow: TextOverflow.ellipsis,
                     ),
                     DisplayBox(
@@ -151,7 +164,10 @@ class _PostDisplayState extends State<PostDisplay> {
                   children: [
                     const Text(
                       'Upload Time : ',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700),
                       overflow: TextOverflow.ellipsis,
                     ),
                     DisplayBox(
@@ -166,7 +182,10 @@ class _PostDisplayState extends State<PostDisplay> {
                   children: [
                     const Text(
                       'Status : ',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700),
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(
@@ -174,7 +193,7 @@ class _PostDisplayState extends State<PostDisplay> {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: const Color(0xFF070c29),
+                          color: secondaryColor,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -184,8 +203,9 @@ class _PostDisplayState extends State<PostDisplay> {
                               child: Text(
                                 widget.post.status,
                                 style: const TextStyle(
-                                  color: Color(0xFF50fa7b),
-                                ),
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
                             Padding(
@@ -194,7 +214,7 @@ class _PostDisplayState extends State<PostDisplay> {
                                 widget.post.status == 'Approved'
                                     ? Icons.check
                                     : Icons.error,
-                                color: const Color(0xFF50fa7b),
+                                color: Colors.black,
                               ),
                             ),
                           ],

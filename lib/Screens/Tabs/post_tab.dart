@@ -483,6 +483,7 @@ class _PostTabState extends State<PostTab> {
     return Scaffold(
       backgroundColor: backgroundColor,
       floatingActionButton: FloatingActionButton(
+        heroTag: "btn1",
         backgroundColor: secondaryColor,
         onPressed: () {
           promptInput(context);
