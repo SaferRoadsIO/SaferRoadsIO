@@ -19,7 +19,7 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color statusRoom = Colors.grey;
+    Color statusRoom = Colors.grey.shade600;
     if (post.status == 'Approved') {
       statusRoom = const Color(0xFF50fa7b);
     } else if (post.status == 'Declined') {
@@ -40,11 +40,9 @@ class PostCard extends StatelessWidget {
         padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 10.0),
         child: Container(
           decoration: BoxDecoration(
-            color: const Color(0xFF151430),
+            color: Colors.grey.shade300,
             border: Border.all(
-              color: const Color(
-                0XFFff79c6,
-              ),
+              color: Colors.black,
               width: 3.0,
             ),
             borderRadius: BorderRadius.circular(15),
@@ -60,14 +58,20 @@ class PostCard extends StatelessWidget {
                   children: [
                     const Text(
                       'Violation: ',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
                       overflow: TextOverflow.ellipsis,
                     ),
                     Flexible(
                       child: Text(
                         post.violation,
-                        style: const TextStyle(
-                          color: Color(0xFF50fa7b),
+                        style: TextStyle(
+                          color: Colors.cyan.shade800,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -78,14 +82,20 @@ class PostCard extends StatelessWidget {
                   children: [
                     const Text(
                       'Description: ',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
                       softWrap: true,
                     ),
                     Flexible(
                       child: Text(
                         post.description,
-                        style: const TextStyle(
-                          color: Color(0xFF50fa7b),
+                        style: TextStyle(
+                          color: Colors.cyan.shade800,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -95,11 +105,17 @@ class PostCard extends StatelessWidget {
                 Row(
                   children: [
                     const Text('Location: ',
-                        style: TextStyle(color: Colors.white)),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        )),
                     Text(
                       '(${post.latitude}), (${post.longitude})',
-                      style: const TextStyle(
-                        color: Color(0xFF50fa7b),
+                      style: TextStyle(
+                        color: Colors.cyan.shade800,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
@@ -108,12 +124,18 @@ class PostCard extends StatelessWidget {
                   children: [
                     const Text(
                       'Upload Time: ',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       getTime(post.uploadTime.toDate().toString()),
-                      style: const TextStyle(
-                        color: Color(0xFF50fa7b),
+                      style: TextStyle(
+                        color: Colors.cyan.shade800,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -122,11 +144,17 @@ class PostCard extends StatelessWidget {
                 Row(
                   children: [
                     const Text('Number Plate: ',
-                        style: TextStyle(color: Colors.white)),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        )),
                     Text(
                       post.numberPlate,
-                      style: const TextStyle(
-                        color: Color(0xFF50fa7b),
+                      style: TextStyle(
+                        color: Colors.cyan.shade800,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -134,14 +162,20 @@ class PostCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Status: ',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
-                      '${post.status}',
+                      post.status,
                       style: TextStyle(
                         color: statusRoom,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),

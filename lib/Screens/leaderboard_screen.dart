@@ -43,7 +43,7 @@ class Leaderboard extends StatelessWidget {
                   } else {
                     dynamic docs = snapshot.data?.docs;
                     return ListView(
-                      children: docs.map((
+                      children: docs.map<Widget>((
                         QueryDocumentSnapshot document,
                       ) {
                         dynamic data = document.data();
