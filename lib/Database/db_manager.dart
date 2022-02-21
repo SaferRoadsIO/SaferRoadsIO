@@ -4,9 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:saferroadsio/Database/http_manager.dart';
 import 'dart:io';
 
-import '../Classes/Post.dart';
+import '../Classes/post_class.dart';
 
 class DatabaseManager {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -266,7 +267,7 @@ class DatabaseManager {
         .catchError((error) => print("Failed to add user data: $error"));
   }
 
-  Future<int> getApprovedPosts(String uid) async {
+  Future<int> getApprovedPosts(String? uid) async {
     int approvedPosts = 0;
 
     await FirebaseFirestore.instance
@@ -290,7 +291,7 @@ class DatabaseManager {
     return approvedPosts;
   }
 
-  Future<int> getDeclinedPosts(String uid) async {
+  Future<int> getDeclinedPosts(String? uid) async {
     int approvedPosts = 0;
 
     await FirebaseFirestore.instance
@@ -329,14 +330,7 @@ class DatabaseManager {
     }
   }
 
-  Future<String> getProfilePic(String uid) async {
-    String downloadURL = await firebase_storage.FirebaseStorage.instance
-        .ref('Users/$uid/profile_pic')
-        .getDownloadURL();
-    return downloadURL;
-  }
-
-  Future changeUsername(String uid, String fullName) async {
+  Future changeUsername(String? uid, String fullName) async {
     return await FirebaseFirestore.instance
         .collection('Users')
         .doc(uid)
@@ -345,27 +339,26 @@ class DatabaseManager {
         .catchError((error) => print("Failed to update FullName: $error"));
   }
 
-  // Future getNumberPlate(File file, Timestamp time) async {
-  //   String numberPlate;
-  //   String url;
-  //   String path = 'TempNumberPlateFolder/${time.toDate().toString()}/Media';
-  //   try {
-  //     await firebase_storage.FirebaseStorage.instance.ref(path).putFile(file);
-  //     print("Successfully added media files");
-  //     url = await getDownloadUrl(path);
-  //   } on firebase_core.FirebaseException catch (e) {
-  //     print("Error upload files: ${e.message}");
-  //   }
+  Future getNumberPlate(File file, Timestamp time) async {
+    String? url;
+    String path = 'TempNumberPlateFolder/${time.toDate().toString()}/Media';
+    try {
+      await firebase_storage.FirebaseStorage.instance.ref(path).putFile(file);
+      print("Successfully added media files");
+      url = await getDownloadUrl(path);
+    } on firebase_core.FirebaseException catch (e) {
+      print("Error upload files: ${e.message}");
+    }
 
-  //   HttpManager manager = HttpManager();
-  //   if (url != null) {
-  //     numberPlate = await manager.getNumberPlate(url);
-  //     if (numberPlate != null || numberPlate != 'No Number Plate Found.') {
-  //       return numberPlate;
-  //     }
-  //   }
-  //   return 'No Number Plate Found.';
-  // }
+    HttpManager manager = HttpManager();
+    if (url != null) {
+      String? numberPlate = await manager.getNumberPlate(url);
+      if (numberPlate != 'No Number Plate Found.') {
+        return numberPlate;
+      }
+    }
+    return 'No Number Plate Found.';
+  }
 
   uploadNumberPlate(String numberPlate) async {
     String firstMediaTime = 'loading';

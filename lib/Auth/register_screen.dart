@@ -312,10 +312,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const HomeScreen(
-                              // showWelcomePopup: true,
-                              // tab: 0,
-                              ),
+                          builder: (context) => HomeScreen(
+                            showWelcomePopup: true,
+                            tab: 0,
+                          ),
                         ),
                       );
                     },

@@ -33,7 +33,9 @@ class _LoginState extends State<LoginScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
+            builder: (context) => HomeScreen(
+              tab: 0,
+            ),
           ),
         );
       });
@@ -179,10 +181,10 @@ class _LoginState extends State<LoginScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const HomeScreen(
-                                    // showWelcomePopup: false,
-                                    // tab: 0,
-                                    ),
+                                builder: (context) => HomeScreen(
+                                  showWelcomePopup: false,
+                                  tab: 0,
+                                ),
                               ),
                             );
                           } else {
